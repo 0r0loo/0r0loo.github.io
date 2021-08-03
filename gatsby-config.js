@@ -1,37 +1,87 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    title: `자바스크립트 주니어 개발자의 블로그`,
+    description: `블로깅을 하기 위한 블로그 입니다.`,
+    author: `조태규`,
+    siteUrl: 'https:google.com',
   },
   plugins: [
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-canonical-urls',
+      options: {
+        siteUrl: '<https://my-website.com/>',
+        stripQueryString: true,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-typescript',
+      options: {
+        isTSX: true,
+        allExtensions: true,
+      },
+    },
+    `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-image`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `contents`,
+        path: `${__dirname}/contents`,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
+        path: `${__dirname}/static`,
       },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: `gatsby-transformer-remark`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        plugins: [
+          {
+            resolve: 'gatsby-remark-smartypants',
+            options: {
+              dashes: 'oldschool',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-prismjs',
+            options: {
+              classPrefix: 'language-',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 768,
+              quality: 100,
+              withWebp: true,
+            },
+          },
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {},
+          },
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+              rel: 'nofollow',
+            },
+          },
+        ],
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
   ],
-}
+};
